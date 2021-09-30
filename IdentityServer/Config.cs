@@ -25,10 +25,7 @@ namespace IdentityServer
                 new ApiScope("movieAPI", "Movie API")
             };
         public static IEnumerable<ApiResource> ApiResources =>
-            new ApiResource[]
-            {
-
-            };
+            Array.Empty<ApiResource>();
         public static IEnumerable<IdentityResource> IdentityResources =>
             new IdentityResource[] { };
         public static List<TestUser> TestUsers =>

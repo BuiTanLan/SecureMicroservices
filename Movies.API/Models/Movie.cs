@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Movies.API.Models;
+﻿namespace Movies.API.Models;
 public class Movie
 {
     public int Id { get; set; }

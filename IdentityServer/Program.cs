@@ -1,6 +1,4 @@
 using IdentityServer;
-using IdentityServer4.Models;
-using IdentityServer4.Test;
 
 var builder = WebApplication.CreateBuilder(args);
 

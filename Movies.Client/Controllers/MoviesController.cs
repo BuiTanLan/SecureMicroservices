@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Movies.Client.ApiServices;
-using Movies.Client.Data;
 using Movies.Client.Models;
 
 namespace Movies.Client.Controllers

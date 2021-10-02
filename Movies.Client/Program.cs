@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Movies.Client.ApiServices;
-using Movies.Client.Data;
+﻿using Movies.Client.ApiServices;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IMovieApiService, MovieApiService>();

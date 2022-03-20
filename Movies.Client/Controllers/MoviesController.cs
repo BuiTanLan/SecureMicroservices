@@ -140,10 +140,9 @@ public class MoviesController : Controller
         return Ok();
     }
 
-    private bool MovieExists(int id)
+    private async Task<bool> MovieExists(int id)
     {
-        var result = _movieApiService.GetMovie(id);
-        if (result == null) return false;
-        else return true;
+        var result = await _movieApiService.GetMovie(id);
+        return result is not null;
     }
 }

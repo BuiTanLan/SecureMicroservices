@@ -22,14 +22,14 @@ public class MoviesController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Movie>>> GetMovie()
     {
-        return await _context.Movie.ToListAsync();
+        return await _context.Movie.AsNoTracking().ToListAsync();
     }
 
     // GET: api/Movies/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Movie>> GetMovie(int id)
     {
-        var movie = await _context.Movie.FindAsync(id);
+        var movie = await _context.Movie.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
 
         if (movie == null)
         {
@@ -57,14 +57,12 @@ public class MoviesController : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!MovieExists(id))
+            if (!await MovieExists(id))
             {
                 return NotFound();
             }
-            else
-            {
-                throw;
-            }
+
+            throw;
         }
 
         return NoContent();
@@ -97,8 +95,8 @@ public class MoviesController : ControllerBase
         return NoContent();
     }
 
-    private bool MovieExists(int id)
+    private async Task<bool> MovieExists(int id)
     {
-        return _context.Movie.Any(e => e.Id == id);
+        return await _context.Movie.AnyAsync(e => e.Id == id);
     }
 }

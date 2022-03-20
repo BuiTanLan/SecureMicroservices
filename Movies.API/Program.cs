@@ -1,15 +1,20 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Movies.API.Data;
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddDbContext<MoviesContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MoviesAPIContext")));
-
-// Add services to the container.
-
+builder.Host.UseSerilog((_, lc) => lc.WriteTo.Console());
+builder.Services.AddSqlServer<MoviesContext>(builder.Configuration.GetConnectionString("MoviesAPIContext"));
 builder.Services.AddControllers();
-builder.Services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new() {Title = "Movies.API", Version = "v1"}); });
+builder.Services.AddSwaggerGen(c => 
+{ 
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Movies.API", 
+        Version = "v1"
+    }); 
+});
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
@@ -28,9 +33,8 @@ var app = builder.Build();
 // Seed data
 using var scope = app.Services.CreateScope();
 var moviesContext = scope.ServiceProvider.GetService<MoviesContext>();
-MoviesContextSeed.SeedAsync(moviesContext);
+await MoviesContextSeed.SeedAsync(moviesContext);
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -45,4 +49,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-await app.RunAsync();
+app.Run();

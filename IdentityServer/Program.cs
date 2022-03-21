@@ -1,7 +1,9 @@
 using IdentityServer;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllersWithViews();
+builder.Host.UseSerilog((_, lc) => lc.WriteTo.Console());
+builder.Services.AddRazorPages();
 builder.Services.AddIdentityServer()
     .AddInMemoryClients(Config.Clients)
     .AddInMemoryApiScopes(Config.ApiScopes)
@@ -9,14 +11,11 @@ builder.Services.AddIdentityServer()
     .AddTestUsers(Config.TestUsers)
     .AddDeveloperSigningCredential();
 
-
 var app = builder.Build();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseIdentityServer();
 app.UseAuthorization();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapDefaultControllerRoute();
-});
+app.MapRazorPages();
+
 app.Run();

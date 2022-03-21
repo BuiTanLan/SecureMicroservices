@@ -21,17 +21,19 @@ public class MovieApiService : IMovieApiService
 
     public async Task<IEnumerable<Movie>> GetMovies()
     {
-        var movieList = new List<Movie>();
-        movieList.Add(new Movie
+        var movieList = new List<Movie>
         {
-            Id = 1,
-            Genre = "Comics",
-            Title = "End Game",
-            Rating =  "8.6",
-            ImageUrl = "images/src",
-            ReleaseDate = DateTime.Now,
-            Owner = "swn"
-        });
+            new()
+            {
+                Id = 1,
+                Genre = "Comics",
+                Title = "End Game",
+                Rating =  "8.6",
+                ImageUrl = "images/src",
+                ReleaseDate = DateTime.Now,
+                Owner = "swn"
+            }
+        };
         return await Task.FromResult(movieList);
 
     }

@@ -51,8 +51,12 @@ public class Config
         {
             new ApiScope("movieAPI", "Movie API")
         };
+
     public static IEnumerable<ApiResource> ApiResources =>
-        Array.Empty<ApiResource>();
+        new[]
+        {
+            new ApiResource("movieAPI", "Movie API")
+        };
     public static IEnumerable<IdentityResource> IdentityResources =>
         new IdentityResource[] 
         {

@@ -1,8 +1,8 @@
-﻿using IdentityModel;
+﻿using System.Security.Claims;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
-using System.Security.Claims;
+using IdentityModel;
 
 namespace IdentityServer;
 
@@ -43,7 +43,10 @@ public class Config
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
-                    "movieAPI"
+                    IdentityServerConstants.StandardScopes.Address,
+                    IdentityServerConstants.StandardScopes.Email,                           
+                    "movieAPI",
+                    "roles"
                 }
             }
         };
@@ -60,6 +63,9 @@ public class Config
         {
             new IdentityResources.OpenId(),
             new IdentityResources.Profile(),
+            new IdentityResources.Address(),
+            new IdentityResources.Email(),
+            new("roles", "Your role(s)", new List<string> { "role" })
         };
     public static List<TestUser> TestUsers =>
         new()

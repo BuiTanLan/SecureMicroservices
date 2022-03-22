@@ -171,4 +171,9 @@ public class MoviesController : Controller
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);     
     }
+
+    public IActionResult OnlyAdmin()
+    {
+        throw new NotImplementedException();
+    }
 }

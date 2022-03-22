@@ -26,11 +26,11 @@ public class TestUsers
                 
             return new List<TestUser>
             {
-                new TestUser
+                new()
                 {
                     SubjectId = "1",
                     Username = "alice",
-                    Password = "alice",
+                    Password = "a1",
                     Claims =
                     {
                         new Claim(JwtClaimTypes.Name, "Alice Smith"),
@@ -39,14 +39,16 @@ public class TestUsers
                         new Claim(JwtClaimTypes.Email, "AliceSmith@email.com"),
                         new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                         new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
-                        new Claim(JwtClaimTypes.Address, JsonSerializer.Serialize(address), IdentityServerConstants.ClaimValueTypes.Json)
+                        new Claim(JwtClaimTypes.Address, JsonSerializer.Serialize(address), IdentityServerConstants.ClaimValueTypes.Json),
+                        new Claim(JwtClaimTypes.Role, "user")
+
                     }
                 },
-                new TestUser
+                new()
                 {
                     SubjectId = "2",
                     Username = "bob",
-                    Password = "bob",
+                    Password = "b1",
                     Claims =
                     {
                         new Claim(JwtClaimTypes.Name, "Bob Smith"),
@@ -55,7 +57,8 @@ public class TestUsers
                         new Claim(JwtClaimTypes.Email, "BobSmith@email.com"),
                         new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                         new Claim(JwtClaimTypes.WebSite, "http://bob.com"),
-                        new Claim(JwtClaimTypes.Address, JsonSerializer.Serialize(address), IdentityServerConstants.ClaimValueTypes.Json)
+                        new Claim(JwtClaimTypes.Address, "bahcelievler"),
+                        new Claim(JwtClaimTypes.Role, "admin")
                     }
                 }
             };

@@ -24,7 +24,7 @@ public class Config
             new()
             {
                 ClientId = "movies_mvc_client",
-                ClientName = "Movies MVC web app",
+                ClientName = "Movies MVC Web App",
                 AllowedGrantTypes  = GrantTypes.Code,
                 AllowRememberConsent = false,
                 RedirectUris = new List<string>
@@ -42,7 +42,8 @@ public class Config
                 AllowedScopes = new List<string>
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
-                    IdentityServerConstants.StandardScopes.Profile
+                    IdentityServerConstants.StandardScopes.Profile,
+                    "movieAPI"
                 }
             }
         };
@@ -53,10 +54,7 @@ public class Config
         };
 
     public static IEnumerable<ApiResource> ApiResources =>
-        new[]
-        {
-            new ApiResource("movieAPI", "Movie API")
-        };
+        Array.Empty<ApiResource>();
     public static IEnumerable<IdentityResource> IdentityResources =>
         new IdentityResource[] 
         {

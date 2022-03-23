@@ -9,4 +9,7 @@ public interface IMovieApiService
     Task<Movie> CreateMovie();
     Task<Movie> UpdateMovie(Movie movie);
     Task<Movie> DeleteMovie(int id);
+    Task<UserInfoViewModel> GetUserInfo();
+
+    
 }

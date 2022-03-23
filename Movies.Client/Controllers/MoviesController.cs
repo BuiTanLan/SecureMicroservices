@@ -172,8 +172,10 @@ public class MoviesController : Controller
         await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);     
     }
 
-    public IActionResult OnlyAdmin()
+    [Authorize(Roles = "admin")]
+    public async Task<IActionResult> OnlyAdmin()
     {
-        throw new NotImplementedException();
+        var userInfo = await _movieApiService.GetUserInfo();
+        return View(userInfo);            
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System.Text.Json;
 using IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Movies.Client.Models;
 
 namespace Movies.Client.ApiServices;
@@ -7,10 +9,12 @@ namespace Movies.Client.ApiServices;
 public class MovieApiService : IMovieApiService
 {
     private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public MovieApiService(IHttpClientFactory httpClientFactory)
+    public MovieApiService(IHttpClientFactory httpClientFactory,IHttpContextAccessor httpContextAccessor)
     {
         _httpClientFactory = httpClientFactory;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public Task<Movie> CreateMovie()
@@ -87,5 +91,36 @@ public class MovieApiService : IMovieApiService
     public Task<Movie> UpdateMovie(Movie movie)
     {
         throw new NotImplementedException();
+    }
+    
+    public async Task<UserInfoViewModel> GetUserInfo()
+    {           
+        var idpClient = _httpClientFactory.CreateClient("IDPClient");
+
+        var metaDataResponse = await idpClient.GetDiscoveryDocumentAsync();
+
+        if (metaDataResponse.IsError)
+        {
+            throw new HttpRequestException("Something went wrong while requesting the access token");
+        }
+
+        var accessToken = await _httpContextAccessor
+            .HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
+
+        var userInfoResponse = await idpClient.GetUserInfoAsync(
+            new UserInfoRequest
+            {
+                Address = metaDataResponse.UserInfoEndpoint,
+                Token = accessToken
+            });
+
+        if (userInfoResponse.IsError)
+        {
+            throw new HttpRequestException("Something went wrong while getting user info");
+        }
+
+        var userInfoDictionary = userInfoResponse.Claims.ToDictionary(claim => claim.Type, claim => claim.Value);
+
+        return new UserInfoViewModel(userInfoDictionary);            
     }
 }

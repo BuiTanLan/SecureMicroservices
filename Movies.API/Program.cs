@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Movies.API.Data;
@@ -5,7 +6,7 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((_, lc) => lc.WriteTo.Console());
-builder.Services.AddSqlServer<MoviesContext>(builder.Configuration.GetConnectionString("MoviesAPIContext"));
+builder.Services.AddSqlServer<MoviesContext>(builder.Configuration.GetConnectionString("DefaultConnection"));
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(c => 
 { 
@@ -33,6 +34,7 @@ var app = builder.Build();
 // Seed data
 using var scope = app.Services.CreateScope();
 var moviesContext = scope.ServiceProvider.GetService<MoviesContext>();
+await moviesContext!.Database.MigrateAsync();
 await MoviesContextSeed.SeedAsync(moviesContext);
 
 if (app.Environment.IsDevelopment())

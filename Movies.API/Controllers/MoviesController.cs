@@ -22,14 +22,14 @@ public class MoviesController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Movie>>> GetMovie()
     {
-        return await _context.Movie.AsNoTracking().ToListAsync();
+        return await _context.Movies.AsNoTracking().ToListAsync();
     }
 
     // GET: api/Movies/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Movie>> GetMovie(int id)
     {
-        var movie = await _context.Movie.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+        var movie = await _context.Movies.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
 
         if (movie == null)
         {
@@ -73,7 +73,7 @@ public class MoviesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Movie>> PostMovie(Movie movie)
     {
-        _context.Movie.Add(movie);
+        _context.Movies.Add(movie);
         await _context.SaveChangesAsync();
 
         return CreatedAtAction("GetMovie", new { id = movie.Id }, movie);
@@ -83,13 +83,13 @@ public class MoviesController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteMovie(int id)
     {
-        var movie = await _context.Movie.FindAsync(id);
+        var movie = await _context.Movies.FindAsync(id);
         if (movie == null)
         {
             return NotFound();
         }
 
-        _context.Movie.Remove(movie);
+        _context.Movies.Remove(movie);
         await _context.SaveChangesAsync();
 
         return NoContent();
@@ -97,6 +97,6 @@ public class MoviesController : ControllerBase
 
     private async Task<bool> MovieExists(int id)
     {
-        return await _context.Movie.AnyAsync(e => e.Id == id);
+        return await _context.Movies.AnyAsync(e => e.Id == id);
     }
 }

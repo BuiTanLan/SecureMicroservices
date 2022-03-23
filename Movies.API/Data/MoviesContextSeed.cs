@@ -7,7 +7,7 @@ public class MoviesContextSeed
 {
     public static async Task SeedAsync(MoviesContext moviesContext)
     {
-        if (!await moviesContext.Movie.AnyAsync())
+        if (!await moviesContext.Movies.AnyAsync())
         {
             var movies = new List<Movie>
             {
@@ -92,7 +92,7 @@ public class MoviesContextSeed
                     Owner = "bob"
                 }
             };
-            moviesContext.Movie.AddRange(movies);
+            moviesContext.Movies.AddRange(movies);
             await moviesContext.SaveChangesAsync();
         }
     }

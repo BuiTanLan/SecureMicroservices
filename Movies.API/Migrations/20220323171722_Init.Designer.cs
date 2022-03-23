@@ -12,14 +12,14 @@ using Movies.API.Data;
 namespace Movies.API.Migrations
 {
     [DbContext(typeof(MoviesContext))]
-    [Migration("20210918161810_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220323171722_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0-rc.1.21452.10")
+                .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -27,10 +27,7 @@ namespace Movies.API.Migrations
             modelBuilder.Entity("Movies.API.Models.Movie", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Genre")
                         .IsRequired()
@@ -57,7 +54,7 @@ namespace Movies.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movie");
+                    b.ToTable("Movies");
                 });
 #pragma warning restore 612, 618
         }

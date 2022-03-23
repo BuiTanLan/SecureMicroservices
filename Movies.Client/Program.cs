@@ -27,7 +27,7 @@ builder.Services.AddHttpClient("MovieAPIClient", client =>
 // 2 create an HttpClient used for accessing the IDP
 builder.Services.AddHttpClient("IDPClient", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:5005/");
+    client.BaseAddress = new Uri("https://localhost:5010/");
     client.DefaultRequestHeaders.Clear();
     client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
 });

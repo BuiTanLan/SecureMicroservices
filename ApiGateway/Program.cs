@@ -1,6 +1,7 @@
 using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Serilog;
 
 const string authenticationProviderKey = "IdentityApiKey";
 var configuration = new ConfigurationBuilder()
@@ -8,6 +9,7 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog((_, lc) => lc.WriteTo.Console());
 builder.Services.AddOcelot(configuration);
 builder.Services.AddAuthentication()
     .AddJwtBearer(authenticationProviderKey, x =>

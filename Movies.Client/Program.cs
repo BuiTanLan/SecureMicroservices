@@ -49,7 +49,7 @@ builder.Services.AddAuthentication(options =>
                 {
                     options.Authority = "https://localhost:5005";
                     options.ClientId = "movies_mvc_client";
-                    options.ClientSecret = "secret";
+                    options.ClientSecret = "secret id_token";
                     options.ResponseType = "code";
                     // options.Scope.Add("openid");
                     // options.Scope.Add("profile");
